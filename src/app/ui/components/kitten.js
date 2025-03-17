@@ -7,9 +7,12 @@ import moodChange from '@/app/events/moodChange';
 import { saveData, getData } from '@/app/cache';
 
 export default function Kitten() {
-  let [mood, setMood] = useState(getData("mood", "regular"));
-
+  let [mood, setMood] = useState("");
+  
   useEffect(() => {
+    let cachedMood = getData("mood", "regular");
+    mood = cachedMood;
+    setMood(mood);
     const handleMoodChange = (receivedMood) => {
       console.log("received: " + receivedMood)
       console.log("current: " + mood)

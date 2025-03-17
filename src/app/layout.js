@@ -25,6 +25,9 @@ export default function RootLayout({ children }) {
         <main>
           <Timer/>
           {children}
+        <footer>
+          <Link href="">Sobre Nosotros</Link>
+        </footer>
         </main>
       </body>
     </html>
