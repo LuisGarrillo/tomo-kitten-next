@@ -24,3 +24,51 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+* {
+  font-size: 32px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  background-color: #F9EBBE;
+  color: #1e1b38;
+}
+
+body {
+  display: flex;
+}
+
+body nav {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+body nav a{
+  background-color: #F9C7BE;
+  transition: .2s;
+  
+  padding: 10px;
+  width: 200px;
+
+  text-decoration: none;
+  text-align: center;
+  border-radius: 5px;
+}
+
+body nav a:hover {
+  background-color: #f2b3b3;
+  transition: .2s;
+}
+
+main {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
