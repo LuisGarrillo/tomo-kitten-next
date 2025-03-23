@@ -6,11 +6,18 @@ import { saveData, getData } from '@/app/cache';
 let d = new Date();
 let currentSeconds = d.getSeconds();
 
-export let statsData = {
-  "hygiene": "",
-  "hunger": "",
-  "happiness": "",
-};
+export let catData = {
+  "name": "",
+  "mood": "regular",
+  "stats": {
+    "hygiene": 75,
+    "hunger": 75,
+    "happiness": 75,
+  },
+  "accessory": "none",
+  "fav-food": "milk",
+  "history": [],
+}
 
 let secondsData = {
     "hygiene": currentSeconds,
@@ -19,34 +26,34 @@ let secondsData = {
 };
 
 export default function Timer() {
-  let [hygiene, setHygiene] = useState(statsData["hygiene"]);
-  let [hunger, setHunger] = useState(statsData["hunger"]);
-  let [happiness, setHappiness] = useState(statsData["happiness"]);
+  let [hygiene, setHygiene] = useState(catData["stats"]["hygiene"]);
+  let [hunger, setHunger] = useState(catData["stats"]["hunger"]);
+  let [happiness, setHappiness] = useState(catData["stats"]["happiness"]);
 
   function updateValues() {
     currentSeconds += 1;
 
     if (currentSeconds - secondsData["hygiene"] >= 1) {
         secondsData["hygiene"] = currentSeconds;
-        statsData["hygiene"] -= (statsData["hygiene"] > 0) ? 1 : 0;
-        setHygiene(statsData["hygiene"]);
+        catData["stats"]["hygiene"] -= (catData["stats"]["hygiene"] > 0) ? 1 : 0;
+        setHygiene(catData["stats"]["hygiene"]);
     }
     if (currentSeconds - secondsData["hunger"] >= 2) {
         secondsData["hunger"] = currentSeconds;
-        statsData["hunger"] -= (statsData["hunger"] > 0) ? 1 : 0;
-        setHunger(statsData["hunger"]);
+        catData["stats"]["hunger"] -= (catData["stats"]["hunger"] > 0) ? 1 : 0;
+        setHunger(catData["stats"]["hunger"]);
     }
     if (currentSeconds - secondsData["happiness"] >= 3) {
         secondsData["happiness"] = currentSeconds;
-        statsData["happiness"] -= (statsData["happiness"] > 0) ? 1 : 0;
-        setHappiness(statsData["happiness"]);
+        catData["stats"]["happiness"] -= (catData["stats"]["happiness"] > 0) ? 1 : 0;
+        setHappiness(catData["stats"]["happiness"]);
     }
-    saveData(JSON.stringify(statsData), "statsData");
+    saveData(JSON.stringify(catData), "catData");
     checkStats();
   }
 
   function checkStats() {
-    let total = statsData["hygiene"] + statsData["hunger"] + statsData["happiness"];
+    let total = catData["stats"]["hygiene"] + catData["stats"]["hunger"] + catData["stats"]["happiness"];
     let newState;
     if (total > 250) {
         newState = "happy";
@@ -57,21 +64,30 @@ export default function Timer() {
     else {
         newState = "mad";
     }
-    console.log(total);
-    moodChange.emit("moodChanged", newState);
+    if (newState != catData["mood"]) {
+      catData["mood"] = newState;
+      moodChange.emit("moodChanged", newState);
+    }
   }
 
   useEffect(() => {
-      let storedStats = getData("statsData", {
-        "hygiene": 75,
-        "hunger": 75,
-        "happiness": 75,
+      let storedData = getData("catData", {
+        "name": "",
+        "mood": "regular",
+        "stats": {
+          "hygiene": 75,
+          "hunger": 75,
+          "happiness": 75,
+        },
+        "accessory": "none",
+        "fav-food": "milk",
+        "history": [],
       });
-      storedStats = typeof storedStats == "string" ? JSON.parse(storedStats) : storedStats; 
-      statsData = storedStats;
-      setHygiene(statsData["hygiene"]);
-      setHunger(statsData["hunger"]);
-      setHappiness(statsData["happiness"])
+      storedData = typeof storedData == "string" ? JSON.parse(storedData) : storedData; 
+      catData = storedData;
+      setHygiene(catData["stats"]["hygiene"]);
+      setHunger(catData["stats"]["hunger"]);
+      setHappiness(catData["stats"]["happiness"])
 
       const interval = setInterval(updateValues, 1000);
 
@@ -81,17 +97,17 @@ export default function Timer() {
   
   useEffect(() => {
     function raiseStats(stat) {
-      statsData[stat] += (statsData[stat] + 5 < 100) ? 5 : 100 - statsData[stat];
+      catData["stats"][stat] += (catData["stats"][stat] + 5 < 100) ? 5 : 100 - catData["stats"][stat];
       if (stat == "hygiene") {
-        setHygiene(statsData["hygiene"]);
+        setHygiene(catData["stats"]["hygiene"]);
       }
       else if (stat == "hunger") {
-        setHunger(statsData["hunger"]);
+        setHunger(catData["stats"]["hunger"]);
       }
       else {
-        setHappiness(statsData["happiness"]);
+        setHappiness(catData["stats"]["happiness"]);
       }
-      saveData(statsData, "statsData");
+      saveData(catData, "catData");
       checkStats();
     }
     
@@ -104,9 +120,9 @@ export default function Timer() {
 
     return (
       <div>
-        <p>Higiene: {statsData["hygiene"]}</p>
-        <p>Hambre: {statsData["hunger"]}</p>
-        <p>Felicidad: {statsData["happiness"]}</p>
+        <p>Higiene: {catData["stats"]["hygiene"]}</p>
+        <p>Hambre: {catData["stats"]["hunger"]}</p>
+        <p>Felicidad: {catData["stats"]["happiness"]}</p>
       </div>
     );
 
