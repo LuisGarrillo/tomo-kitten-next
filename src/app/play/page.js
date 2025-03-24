@@ -2,6 +2,7 @@
 
 import Kitten from "../ui/components/kitten";
 import moodChange from "../events/moodChange";
+import TimerLayout from "../ui/components/layout";
 import { statsData } from "../ui/components/timer";
 
 export default function Play() {
@@ -10,12 +11,13 @@ export default function Play() {
     }
 
     return (
-      <div>
+      <TimerLayout>
         <Kitten/>
         <div>
           <button onClick={raiseMood} value={"hygiene"}>Peinar</button>
           <button onClick={raiseMood} value={"happiness"}>Acariciar</button>
         </div>
-      </div>
+      
+      </TimerLayout>
     );
   }
