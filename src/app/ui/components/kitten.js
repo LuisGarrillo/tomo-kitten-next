@@ -4,7 +4,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import moodChange from '@/app/events/moodChange';
-import { saveData, getData } from '@/app/cache';
 import { catData } from './timer';
 
 export default function Kitten() {
@@ -13,9 +12,8 @@ export default function Kitten() {
   useEffect(() => {
     mood = catData["mood"];
     setMood(mood);
+    
     const handleMoodChange = (receivedMood) => {
-      console.log("received: " + receivedMood)
-      console.log("current: " + mood)
         setMood(receivedMood);
         mood = receivedMood;
     };
