@@ -26,7 +26,7 @@ body {
 }
 
 * {
-  font-size: 32px;
+  font-size: 48px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -71,4 +71,64 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.link {
+  opacity: 0.8;
+  transition: .2s;
+  pointer-events: none;
+}
+
+.link.active {
+  opacity: 1;
+  transition: .2s;
+  pointer-events: all;
+}
+
+
+.timer-wrapper{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  align-items: center;
+  height: 97px;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  gap: 64px;
+  width: 100%;
+
+  height: 100%;
+  transition: all .7s;
+}
+
+.timer.visible{
+  overflow: hidden;
+  height: 0;
+  transition: all .7s;
+}
+.timer p {
+  opacity: 1;
+  transition: 1.75s;
+}
+
+.timer.visible p {
+  opacity: 0;
+  transition: .4s;
+}
+
+.timer-component button {
+  background-color: #f2b3b3;
+  width: 25px;
+  height: 25px;
 }
