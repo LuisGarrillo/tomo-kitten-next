@@ -118,11 +118,19 @@ export default function Timer() {
       };
     }, []);
 
+    function toggleVisibility() {
+      const timer = document.querySelector(".timer");
+      timer.classList.toggle("visible")
+    }
+
     return (
-      <div>
-        <p>Higiene: {catData["stats"]["hygiene"]}</p>
-        <p>Hambre: {catData["stats"]["hunger"]}</p>
-        <p>Felicidad: {catData["stats"]["happiness"]}</p>
+      <div className='timer-component'>
+        <div className='timer'>
+          <p>Higiene: {catData["stats"]["hygiene"]}</p>
+          <p>Hambre: {catData["stats"]["hunger"]}</p>
+          <p>Felicidad: {catData["stats"]["happiness"]}</p>
+        </div>
+        <button onClick={toggleVisibility}></button>
       </div>
     );
 
