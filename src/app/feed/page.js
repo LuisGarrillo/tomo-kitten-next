@@ -1,7 +1,14 @@
+import TimerLayout from "../ui/components/layout";
+import Kitten from "../ui/components/kitten";
+
 export default function Feed() {
     return (
       <div>
-        Feed
+        <TimerLayout>
+          <Kitten/>
+          <div>
+          </div>
+        </TimerLayout>
       </div>
     );
   }
