@@ -29,6 +29,7 @@ export default function Feed() {
 
     return (
         <TimerLayout>
+            <h2>Hambre</h2>
             <Kitten />
             <div>
                 <button onClick={increaseHunger} value={10}>Comida 1</button>
