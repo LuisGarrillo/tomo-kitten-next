@@ -35,9 +35,6 @@ export default function RootLayout({ children }) {
         </nav>
         <main>
           {children}
-        <footer>
-          <Link href="">Sobre Nosotros</Link>
-        </footer>
         </main>
       </body>
     </html>
