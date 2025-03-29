@@ -2,6 +2,7 @@ import { monogram} from "@/app/ui/fonts";
 import "./globals.css";
 import Link from "next/link";
 import Timer from "@/app/ui/components/timer"
+import NavButton from "./ui/components/navButton";
 
 export const metadata = {
   title: "Tomo Kitten",
@@ -16,14 +17,23 @@ export default function RootLayout({ children }) {
         className={`${monogram.className}`}
       >
         <nav>
-            <Link href="/"> Inicio </Link>
-            <Link href="/play"> Jugar </Link>
-            <Link href="/feed"> Alimentar </Link>
-            <Link href="/customize"> Personalizar </Link>
-            <Link href="/cementery"> Cementerio </Link>
+            <NavButton
+              propPage={"home"}
+            />
+            <NavButton
+              propPage={"play"}
+            />
+            <NavButton
+              propPage={"feed"}
+            />
+            <NavButton
+              propPage={"customize"}
+            />
+            <NavButton
+              propPage={"cementery"}
+            />
         </nav>
         <main>
-          <Timer/>
           {children}
         <footer>
           <Link href="">Sobre Nosotros</Link>
