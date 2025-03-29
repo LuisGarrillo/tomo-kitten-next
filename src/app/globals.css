@@ -23,6 +23,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   height: 100vh;
+  background-color: #F9EBBE;
 }
 
 * {
@@ -31,7 +32,7 @@ body {
   padding: 0;
   box-sizing: border-box;
 
-  background-color: #F9EBBE;
+  
   color: #1e1b38;
 }
 
@@ -83,6 +84,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 
 .timer-component {
@@ -113,12 +115,6 @@ main {
   transition: 1.75s;
 }
 
-.baseButton {
-  background-image: url("/buttons/empty/botones_vacios.png") no-repeat;
-  width: 350px;
-  height: 100px;
-}
-
 .timer.visible .stat-icon {
   opacity: 0;
   transition: .4s;
@@ -139,8 +135,25 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
+  gap: 25px;
 }
 
-.base-button p {
-  position: static;
+.base-button {
+  position: relative; /* Importante para posicionar el texto */
+  display: inline-block; /* O display: block; según tus necesidades */
+}
+
+.base-button .base-button-text {
+  position: absolute; /* Posiciona el texto encima de la imagen */
+  top: 50%; /* Centra verticalmente */
+  left: 50%; /* Centra horizontalmente */
+  transform: translate(-50%, -50%); /* Ajusta el centrado */
+  text-align: center; /* Asegura el centrado horizontal */
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

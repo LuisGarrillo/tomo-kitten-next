@@ -22,7 +22,7 @@ export default function BaseButton({event, text, value}) {
                 onClick={select}
             >
             </Image>
-            <p>
+            <p className="base-button-text" onClick={select}>
                 {text}
             </p>
         </div>  
