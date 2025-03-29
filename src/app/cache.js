@@ -1,3 +1,15 @@
+export const defaultCatValues = {
+  "name": "",
+  "mood": "regular",
+  "stats": {
+    "hygiene": 75,
+    "hunger": 75,
+    "happiness": 75,
+  },
+  "accessory": "none",
+  "fav-food": "milk",
+}
+
 export function getData(key, defaultValue) {
   if (typeof window !== 'undefined') {
     const storedData = localStorage.getItem(key);

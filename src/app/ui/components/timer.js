@@ -3,23 +3,15 @@
 import { useEffect, useState } from 'react';
 import moodChange from '@/app/events/moodChange';
 import { saveData, getData } from '@/app/cache';
+import { defaultCatValues } from '@/app/cache';
 let d = new Date();
 let currentSeconds = d.getSeconds();
 
 import StatIcon from './statIcon';
 
-export let catData = {
-  "name": "",
-  "mood": "regular",
-  "stats": {
-    "hygiene": 75,
-    "hunger": 75,
-    "happiness": 75,
-  },
-  "accessory": "none",
-  "fav-food": "milk",
-  "history": [],
-}
+export let catData = defaultCatValues;
+
+export let history = {"cats": []};
 
 let secondsData = {
     "hygiene": currentSeconds,
@@ -63,9 +55,13 @@ export default function Timer() {
     else if (total > 150) {
         newState = "regular";
     }
-    else {
+    else if (total > 0) {
         newState = "mad";
     }
+    else {
+      newState = "dead"
+    }
+    
     if (newState != catData["mood"]) {
       catData["mood"] = newState;
       moodChange.emit("moodChanged", newState);
@@ -80,18 +76,8 @@ export default function Timer() {
   }
 
   useEffect(() => {
-      let storedData = getData("catData", {
-        "name": "",
-        "mood": "regular",
-        "stats": {
-          "hygiene": 75,
-          "hunger": 75,
-          "happiness": 75,
-        },
-        "accessory": "none",
-        "fav-food": "milk",
-        "history": [],
-      });
+      let storedData = getData("catData", defaultCatValues);
+      let history = getData("history", {"cats": []});
       storedData = typeof storedData == "string" ? JSON.parse(storedData) : storedData; 
       catData = storedData;
       setHygiene(catData["stats"]["hygiene"]);
@@ -106,6 +92,9 @@ export default function Timer() {
   
   useEffect(() => {
     function raiseStats(stat) {
+      if (catData["mood"] == "dead") 
+        return; 
+
       catData["stats"][stat] += (catData["stats"][stat] + 5 < 100) ? 5 : 100 - catData["stats"][stat];
       sendStat(stat, catData["stats"][stat])
       saveData(catData, "catData");
