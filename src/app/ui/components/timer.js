@@ -6,6 +6,8 @@ import { saveData, getData } from '@/app/cache';
 let d = new Date();
 let currentSeconds = d.getSeconds();
 
+import StatIcon from './statIcon';
+
 export let catData = {
   "name": "",
   "mood": "regular",
@@ -36,17 +38,17 @@ export default function Timer() {
     if (currentSeconds - secondsData["hygiene"] >= 1) {
         secondsData["hygiene"] = currentSeconds;
         catData["stats"]["hygiene"] -= (catData["stats"]["hygiene"] > 0) ? 1 : 0;
-        setHygiene(catData["stats"]["hygiene"]);
+        sendStat("hygiene", catData["stats"]["hygiene"]);
     }
     if (currentSeconds - secondsData["hunger"] >= 2) {
         secondsData["hunger"] = currentSeconds;
         catData["stats"]["hunger"] -= (catData["stats"]["hunger"] > 0) ? 1 : 0;
-        setHunger(catData["stats"]["hunger"]);
+        sendStat("hunger", catData["stats"]["hunger"]);
     }
     if (currentSeconds - secondsData["happiness"] >= 3) {
         secondsData["happiness"] = currentSeconds;
         catData["stats"]["happiness"] -= (catData["stats"]["happiness"] > 0) ? 1 : 0;
-        setHappiness(catData["stats"]["happiness"]);
+        sendStat("happiness", catData["stats"]["happiness"]);
     }
     saveData(JSON.stringify(catData), "catData");
     checkStats();
@@ -68,6 +70,13 @@ export default function Timer() {
       catData["mood"] = newState;
       moodChange.emit("moodChanged", newState);
     }
+  }
+
+  function sendStat(stat, value) {
+    moodChange.emit("updateStat", {
+      "stat": stat,
+      "value": value
+    })
   }
 
   useEffect(() => {
@@ -98,15 +107,7 @@ export default function Timer() {
   useEffect(() => {
     function raiseStats(stat) {
       catData["stats"][stat] += (catData["stats"][stat] + 5 < 100) ? 5 : 100 - catData["stats"][stat];
-      if (stat == "hygiene") {
-        setHygiene(catData["stats"]["hygiene"]);
-      }
-      else if (stat == "hunger") {
-        setHunger(catData["stats"]["hunger"]);
-      }
-      else {
-        setHappiness(catData["stats"]["happiness"]);
-      }
+      sendStat(stat, catData["stats"][stat])
       saveData(catData, "catData");
       checkStats();
     }
@@ -126,9 +127,18 @@ export default function Timer() {
     return (
       <div className='timer-component'>
         <div className='timer'>
-          <p>Higiene: {catData["stats"]["hygiene"]}</p>
-          <p>Hambre: {catData["stats"]["hunger"]}</p>
-          <p>Felicidad: {catData["stats"]["happiness"]}</p>
+          <StatIcon
+            stat={"hygiene"}
+            propStatus={"empty"}
+          />
+          <StatIcon
+            stat={"hunger"}
+            propStatus={"empty"}
+          />
+          <StatIcon
+            stat={"happiness"}
+            propStatus={"empty"}
+          />
         </div>
         <button onClick={toggleVisibility}></button>
       </div>
