@@ -77,9 +77,9 @@ export default function Timer() {
 
   useEffect(() => {
       let storedData = getData("catData", defaultCatValues);
-      let history = getData("history", {"cats": []});
       storedData = typeof storedData == "string" ? JSON.parse(storedData) : storedData; 
       catData = storedData;
+      catData["name"] = getData("name", "");
       setHygiene(catData["stats"]["hygiene"]);
       setHunger(catData["stats"]["hunger"]);
       setHappiness(catData["stats"]["happiness"])
