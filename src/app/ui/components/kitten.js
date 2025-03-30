@@ -8,10 +8,11 @@ import { catData } from './timer';
 
 export default function Kitten() {
   let [mood, setMood] = useState(catData["mood"]);
-  
+  let [name, setName] = useState("");
   useEffect(() => {
     mood = catData["mood"];
     setMood(mood);
+    setName(catData["name"]);
     
     const handleMoodChange = (receivedMood) => {
         setMood(receivedMood);
@@ -26,11 +27,16 @@ export default function Kitten() {
   }, []);
 
   return (
-    <Image
-        src={`/kitten/${mood}.gif`}
-        width={370}
-        height={370}
-        alt="Your kitten"
-    />
+    <div className='kitten-wrapper'>
+        <Image
+          src={`/kitten/${mood}.gif`}
+          width={370}
+          height={370}
+          alt="Your kitten"
+      />
+      <p>
+        {name}
+      </p>
+    </div>
   );
 }
