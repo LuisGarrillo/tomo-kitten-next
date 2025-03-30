@@ -29,12 +29,13 @@ export default function Feed() {
 
     return (
         <TimerLayout>
-            <h2>Hambre</h2>
+            <div className="page-wrapper">
             <Kitten />
-            <div>
+            <div className="button-wrapper">
                 <button onClick={increaseHunger} value={10}>Comida 1</button>
                 <button onClick={increaseHunger} value={20}>Comida 2</button>
                 <button onClick={increaseHunger} value={30}>Comida 3</button>
+            </div>
             </div>
         </TimerLayout>
     );

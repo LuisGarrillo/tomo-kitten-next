@@ -13,20 +13,21 @@ export default function Play() {
 
     return (
       <TimerLayout>
-        <Kitten/>
-        <div className="button-wrapper">
-          <BaseButton
-            event={raiseMood}
-            text={"Limpiar"}
-            value={"hygiene"}
-          />
-          <BaseButton
-            event={raiseMood}
-            text={"Acariciar"}
-            value={"happiness"}
-          />
+        <div className="page-wrapper">
+          <Kitten/>
+          <div className="button-wrapper">
+            <BaseButton
+              event={raiseMood}
+              text={"Limpiar"}
+              value={"hygiene"}
+            />
+            <BaseButton
+              event={raiseMood}
+              text={"Acariciar"}
+              value={"happiness"}
+            />
+          </div>
         </div>
-      
       </TimerLayout>
     );
   }

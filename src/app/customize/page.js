@@ -15,13 +15,14 @@ export default function Customize() {
 
     return (
         <TimerLayout>
-            <h2>Personalizar</h2>
-            <Kitten accessory={selectedAccessory} />
-            <div className="accessory-buttons">
-                <button onClick={() => selectAccessory("accessory1")}>Accesorio 1</button>
-                <button onClick={() => selectAccessory("accessory2")}>Accesorio 2</button>
-                <button onClick={() => selectAccessory("accessory3")}>Accesorio 3</button>
-                <button onClick={() => selectAccessory("accessory4")}>Accesorio 4</button>
+            <div className="page-wrapper">
+                <Kitten accessory={selectedAccessory} />
+                <div className="button-wrapper">
+                    <button onClick={() => selectAccessory("accessory1")}>Accesorio 1</button>
+                    <button onClick={() => selectAccessory("accessory2")}>Accesorio 2</button>
+                    <button onClick={() => selectAccessory("accessory3")}>Accesorio 3</button>
+                    <button onClick={() => selectAccessory("accessory4")}>Accesorio 4</button>
+                </div>
             </div>
         </TimerLayout>
     );
