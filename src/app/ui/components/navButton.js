@@ -11,8 +11,10 @@ export default function NavButton({propPage}) {
     let [page, setPage] = useState(propPage);
     let link = (propPage == "home") ? "" : propPage;
 
-    function select() {
-        moodChange.emit("clicked");
+    function select(destination) {
+        if (destination != page)
+            return;
+
         status = "selected";
         setStatus(status);
     }
@@ -23,21 +25,22 @@ export default function NavButton({propPage}) {
     }
 
     useEffect(() => {
-        moodChange.on("clicked", unselect)
+        moodChange.on("loaded", unselect);
+        moodChange.on("loaded", select);
 
         return () => {
-            moodChange.off("clicked", unselect);
+            moodChange.off("loaded", unselect);
+            moodChange.off("loaded", select);
         }
     }, [])
 
     return (
-        <Link href={`/${link}`}>
+        <Link href={`/${link}`} className="nav-button">
             <Image
                 src={`/buttons/${page}/${status}.png`}
                 width={120}
                 height={120}
                 alt="icon button"
-                onClick={select}
             />
         </Link>
     );
