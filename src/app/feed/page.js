@@ -3,11 +3,45 @@
 import Kitten from "../ui/components/kitten";
 import moodChange from "../events/moodChange";
 import TimerLayout from "../ui/components/layout";
+import ImageButton from "../ui/components/imageButton";
 import { useState, useEffect } from "react";
 import { catData } from "../ui/components/timer";
+import { base } from "../ui/defaults/defaultPage";
 
 export default function Feed() {
     const [hunger, setHunger] = useState(catData.stats.hunger);
+    let [page, setPage] = useState(base);
+
+    const feed = (
+        <TimerLayout>
+            <div className="page-wrapper">
+                <Kitten />
+                <div className="button-wrapper">
+                    <ImageButton
+                        source={"/dishes/milk.png"}
+                        width={120}
+                        height={120}
+                        listener={increaseHunger}
+                        data={10}
+                    />
+                    <ImageButton
+                        source={"/dishes/chicken.png"}
+                        width={120}
+                        height={120}
+                        listener={increaseHunger}
+                        data={30}
+                    />
+                    <ImageButton
+                        source={"/dishes/fish.png"}
+                        width={120}
+                        height={120}
+                        listener={increaseHunger}
+                        data={20}
+                    />
+                </div>
+            </div>
+        </TimerLayout>
+    );
 
     useEffect(() => {
         function updateHunger(stat) {
@@ -17,7 +51,8 @@ export default function Feed() {
         }
 
         moodChange.on("moodRaised", updateHunger);
-
+        moodChange.emit("loaded", "feed");
+        setPage(feed);
         return () => {
             moodChange.off("moodRaised", updateHunger);
         };
@@ -27,16 +62,5 @@ export default function Feed() {
         moodChange.emit("moodRaised", "hunger"); // Emitimos el evento para aumentar la hambre
     }
 
-    return (
-        <TimerLayout>
-            <div className="page-wrapper">
-            <Kitten />
-            <div className="button-wrapper">
-                <button onClick={increaseHunger} value={10}>Comida 1</button>
-                <button onClick={increaseHunger} value={20}>Comida 2</button>
-                <button onClick={increaseHunger} value={30}>Comida 3</button>
-            </div>
-            </div>
-        </TimerLayout>
-    );
+    return page
 }
