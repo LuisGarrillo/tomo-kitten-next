@@ -3,15 +3,14 @@
 import Kitten from "../ui/components/kitten";
 import moodChange from "../events/moodChange";
 import TimerLayout from "../ui/components/layout";
+import { useEffect, useState } from "react";
 import { statsData } from "../ui/components/timer";
 import BaseButton from "../ui/components/baseButton";
+import { base } from "../ui/defaults/defaultPage";
 
 export default function Play() {
-    function raiseMood(value) {
-      moodChange.emit("moodRaised", value);
-    }
-
-    return (
+    let [page, setPage] = useState(base);
+    const play = (
       <TimerLayout>
         <div className="page-wrapper">
           <Kitten/>
@@ -30,4 +29,14 @@ export default function Play() {
         </div>
       </TimerLayout>
     );
+
+    function raiseMood(value) {
+      moodChange.emit("moodRaised", value);
+    }
+    useEffect(() => {
+      setPage(play);
+      moodChange.emit("loaded", "play");
+    }, []);
+
+    return page;
   }
