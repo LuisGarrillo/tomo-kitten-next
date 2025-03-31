@@ -4,11 +4,9 @@ import { useRouter } from "next/navigation";
 import BaseButton from "./baseButton";
 import { getData, saveData } from "@/app/cache";
 import { defaultCatValues } from "@/app/cache";
+import moodChange from "@/app/events/moodChange";
+import { base } from "../defaults/defaultPage";
 
-
-const base = (
-    <div></div>
-);
 let catData;
 
 export default function Index() {
@@ -26,7 +24,7 @@ export default function Index() {
         let history = getData("history", {"mascots": []});
         history["mascots"].push(catData);
         saveData(history, "history");
-
+        saveData("", "name");
         saveData(defaultCatValues, "catData");
         setPage(alive);
     }
@@ -62,6 +60,7 @@ export default function Index() {
         else {
             setPage(alive);
         }
+        moodChange.emit("loaded", "home");
     }, [])
 
 
