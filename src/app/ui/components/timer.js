@@ -108,11 +108,6 @@ export default function Timer() {
       };
     }, []);
 
-    function toggleVisibility() {
-      const timer = document.querySelector(".timer");
-      timer.classList.toggle("visible")
-    }
-
     return (
       <div className='timer-component'>
         <div className='timer'>
@@ -129,7 +124,6 @@ export default function Timer() {
             propStatus={"empty"}
           />
         </div>
-        <button onClick={toggleVisibility}></button>
       </div>
     );
 
